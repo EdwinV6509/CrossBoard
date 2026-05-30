@@ -13,11 +13,6 @@ class Workout():
 
         self.identifier = identifier
 
-        #Store to a dataTable for later flask integration. (OUTDATED SYSTEM)
-        #self.dataTable = [self.title, self.date, self.w_type, self.purpose, self.distance_volume, self.notes, self.spikes, self.gym, self.identifier]
-
     #Return a printable string.
     def __str__(self):
         return f"\n{self.title} on {self.date}:\n {self.w_type} || {self.purpose} || {self.distance_volume} || {self.notes}\n Spikes: {self.spikes} || Gym Workout: {self.gym}\n {self.identifier}\n"
-
-#End of workout.py
