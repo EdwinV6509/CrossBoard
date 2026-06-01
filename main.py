@@ -1,45 +1,9 @@
 import workout
 import workout_storage
+import search_functions
+import input_validation
 
 import uuid
-
-#Verify that the user has input a valid menu option choice.
-def validate_menu_input(user_choice, option_range, menu_text):
-    while user_choice is None:
-        print(menu_text)
-
-        try:
-            user_choice = int(input())
-
-            if (user_choice in range(option_range[0], option_range[1])):
-                return user_choice
-            else:
-                print("\nInvalid Input\n")
-
-        except (TypeError, ValueError):
-            print("\nInvalid Input\n")
-
-#Verify that the user has input Y or N correctly and handle invalid input.
-def validate_yesno(prompt):
-    value = None
-
-    while value is None:
-        try:
-            value = input(f"{prompt.capitalize()}? ('Y'/'N'):\t")
-            
-            if str(value.upper()) == "Y":
-                value = True
-            elif str(value.upper()) == "N":
-                value = False
-            else:
-                print("Invalid Input")
-                value = None
-
-        except (TypeError, ValueError):
-            print("Invalid Input")
-            value = None
-    
-    return value
 
 #Handles input for workout creation using workout.py.
 def workout_input():
@@ -52,8 +16,8 @@ def workout_input():
     notes = input("Notes:\t")
  
     #Ensure spikes and gym inputs are valid yes/no responses.
-    spikes = validate_yesno("Spikes")
-    gym = validate_yesno("Gym")
+    spikes = input_validation.validate_yesno("Spikes:")
+    gym = input_validation.validate_yesno("Gym:")
 
     identifier = uuid.uuid4()
 
@@ -65,12 +29,12 @@ def workout_input():
     return workout_info
 
 #Defines function for creating a new workout.
-def new_workout():
+def new_workout(workout_data):
     workout_object = workout_input()
     workout_data.append(workout_object)
 
 #Defines function for viewing a formatted list of all workouts.
-def view_all_workouts():
+def view_all_workouts(workout_data):
     if not workout_data:
         print("\nNo workouts have been created.\n")
         return
@@ -78,27 +42,19 @@ def view_all_workouts():
     for workout in workout_data:
         print(workout)
 
-#Defines function for searching for a specific workout using its UUID.
-def workout_search():
-    try:
-        identifier_choice = uuid.UUID(input("\nEnter Workout UUID:\t"))
+#Edit workout function.
+def edit_workout(workout_data):
+    workout_to_edit = search_functions.search_initialization(workout_data)
 
-    except (ValueError, TypeError):
-        print("\nInvalid Input\n")
+    if workout_to_edit is None:
         return
 
-    #Find workout that matches the identified UUID.
-    for workout in workout_data:
-        if workout.identifier == identifier_choice:
-            print("\nWorkout found:\n" + str(workout))
-            return workout
-        
-    print("\nNo workout found with that UUID.")
-    return
+    if len(workout_to_edit) > 1:
+        workout_to_edit = search_functions.handle_multiple_results(workout_to_edit)
 
-#Edit workout function.
-def edit_workout():
-    workout_to_edit = workout_search()
+    if not workout_to_edit:
+        print("\nOperation Cancelled")
+        return
 
     if not workout_to_edit:
         return
@@ -125,18 +81,18 @@ def edit_workout():
         }
 
     YES_NO_FIELDS = {
-        MENU["spikes"]: ("spikes", "\nSpikes"),
-        MENU["gym"]: ("gym", "\nGym")
+        MENU["spikes"]: ("spikes", "\nSpikes:"),
+        MENU["gym"]: ("gym", "\nGym:")
     }
 
     running = True
     user_choice = None
     option_range = (MENU["exit"], MENU["gym"] + 1)
-    menu_text = ("Type the aspect of the workout would you like to edit, or type '0' to exit.\n\tTitle (1) || Date (2) || Type (3) || Purpose (4) || Volume (5) || Notes (6) ||  Spikes (7) || Gym (8)\n")
+    menu_text = ("\nSelect the aspect of the workout would you like to edit, or type '0' to exit.\n\tTitle (1) || Date (2) || Type (3) || Purpose (4) || Volume (5) || Notes (6) ||  Spikes (7) || Gym (8)\n")
     
     while running:
         #Ensure user_choice is a valid integer input and within the valid range before moving on.
-        user_choice = validate_menu_input(user_choice, option_range, menu_text) 
+        user_choice = input_validation.validate_menu_input(user_choice, option_range, menu_text) 
 
         if user_choice == MENU["exit"]:
             print("\nExited Successfully.")
@@ -148,21 +104,30 @@ def edit_workout():
             new_value = input(prompt)
             setattr(workout_to_edit, attr, new_value)
             print("\nUpdated Workout:\n" + str(workout_to_edit))
+            user_choice = None
 
         elif user_choice in YES_NO_FIELDS:
             attr, prompt = YES_NO_FIELDS[user_choice]
-            new_value = validate_yesno(prompt)
+            new_value = input_validation.validate_yesno(prompt)
             setattr(workout_to_edit, attr, new_value)
             print("\nUpdated Workout:\n" + str(workout_to_edit))
+            user_choice = None
         
 #Workout deletion function.
-def delete_workout():
-    workout_to_delete = workout_search()
+def delete_workout(workout_data):
+    workout_to_delete = search_functions.search_initialization(workout_data)
+
+    if workout_to_delete is None:
+        return
+
+    if len(workout_to_delete) > 1:
+        workout_to_delete = search_functions.handle_multiple_results(workout_to_delete)
 
     if not workout_to_delete:
+        print("\nOperation Cancelled")
         return
-    
-    confirmation = validate_yesno("\nAre you sure you would like to delete this workout")
+
+    confirmation = input_validation.validate_yesno("\nAre you sure you would like to delete this workout?")
 
     if not confirmation:
         print("\nOperation Cancelled")
@@ -174,8 +139,7 @@ def delete_workout():
 def main():
     print("\nWelcome to CrossBoard!\nPlease select a choice to begin:")
 
-    #Load data from JSON and/or initialize global workout_data.
-    global workout_data
+    #Load data from JSON and/or initialize workout_data.
     workout_data = workout_storage.json_to_workouts("workout_data.json")
 
     MENU = {
@@ -195,31 +159,31 @@ def main():
     #Initialize menu loop.
     while running:
         #Ensure user_choice is a valid integer input and within the valid range before moving on.
-        user_choice = validate_menu_input(user_choice, option_range, menu_text)
+        user_choice = input_validation.validate_menu_input(user_choice, option_range, menu_text)
             
         #New Workout.
         if user_choice == MENU["new_workout"]:
-            new_workout()
+            new_workout(workout_data)
             user_choice = None
 
         #View Workouts.
         elif user_choice == MENU["view_workouts"]:
-            view_all_workouts()
+            view_all_workouts(workout_data)
             user_choice = None
             
         #Search Workout.
         elif user_choice == MENU["search_workouts"]:
-            workout_search()
+            search_functions.search_initialization(workout_data)
             user_choice = None
 
         #Edit Program.
         elif user_choice == MENU["edit"]:
-            edit_workout()
+            edit_workout(workout_data)
             user_choice = None
 
         #Delete Program.
         elif user_choice == MENU["delete"]:
-            delete_workout()
+            delete_workout(workout_data)
             user_choice = None
 
         #Exit Program. (Save to JSON)
@@ -227,5 +191,7 @@ def main():
             print("\nThanks for using CrossBoard!\n")
             workout_storage.workouts_to_json("workout_data.json", workout_data)
             running = False
+            return
 
-main()
+if __name__ == "__main__":
+    main()

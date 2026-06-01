@@ -1,1 +1,134 @@
-[]
+[
+    {
+        "title": "2 Mile Run",
+        "date": "7/23/14",
+        "w_type": "Endurance",
+        "purpose": "Longevity",
+        "distance_volume": "2.00 mi",
+        "notes": "8:00 min/mile pace",
+        "spikes": false,
+        "gym": true,
+        "identifier": "6df86e30-fbb8-40e6-9103-32d14ad3930a"
+    },
+    {
+        "title": "Chill Run",
+        "date": "6/23/23",
+        "w_type": "Endurance",
+        "purpose": "Team Bonding",
+        "distance_volume": "Not Specified",
+        "notes": "Stay together as a team!",
+        "spikes": false,
+        "gym": false,
+        "identifier": "adf03196-f8f1-4636-be5c-549071ad33cb"
+    },
+    {
+        "title": "Tempo Tuesday",
+        "date": "8/12/25",
+        "w_type": "Tempo",
+        "purpose": "Threshold Development",
+        "distance_volume": "6.00 mi",
+        "notes": "4 miles at tempo effort",
+        "spikes": false,
+        "gym": false,
+        "identifier": "1f2e3d4c-5b6a-4789-9123-abcdef123456"
+    },
+    {
+        "title": "Hill Repeats",
+        "date": "8/14/25",
+        "w_type": "Speed",
+        "purpose": "Strength",
+        "distance_volume": "5.50 mi",
+        "notes": "10 x 200m uphill",
+        "spikes": true,
+        "gym": false,
+        "identifier": "b6f53f0a-6a44-4f8f-88f4-1c2d3e4f5a67"
+    },
+    {
+        "title": "Recovery Run",
+        "date": "8/15/25",
+        "w_type": "Recovery",
+        "purpose": "Active Recovery",
+        "distance_volume": "4.00 mi",
+        "notes": "Very easy effort",
+        "spikes": false,
+        "gym": false,
+        "identifier": "0c14a998-918e-4baf-a96f-7d7d1b6d4412"
+    },
+    {
+        "title": "Track Intervals",
+        "date": "8/17/25",
+        "w_type": "Speed",
+        "purpose": "Race Preparation",
+        "distance_volume": "7.00 mi",
+        "notes": "8 x 400m at 5K pace",
+        "spikes": true,
+        "gym": false,
+        "identifier": "aabbccdd-eeff-4012-8899-123456789abc"
+    },
+    {
+        "title": "Long Run",
+        "date": "8/18/25",
+        "w_type": "Endurance",
+        "purpose": "Aerobic Base",
+        "distance_volume": "12.00 mi",
+        "notes": "Steady conversational pace",
+        "spikes": false,
+        "gym": false,
+        "identifier": "99887766-5544-3322-1100-a1b2c3d4e5f6"
+    },
+    {
+        "title": "Weight Room Session",
+        "date": "8/19/25",
+        "w_type": "Strength",
+        "purpose": "Injury Prevention",
+        "distance_volume": "Not Specified",
+        "notes": "Squats, lunges, and core",
+        "spikes": false,
+        "gym": true,
+        "identifier": "f1e2d3c4-b5a6-4789-9abc-def123456789"
+    },
+    {
+        "title": "Pre-Meet Shakeout",
+        "date": "8/20/25",
+        "w_type": "Recovery",
+        "purpose": "Race Preparation",
+        "distance_volume": "3.00 mi",
+        "notes": "Easy run with strides",
+        "spikes": false,
+        "gym": false,
+        "identifier": "10293847-5647-4839-abcd-ffeeddccbbaa"
+    },
+    {
+        "title": "800m Specific Workout",
+        "date": "8/21/25",
+        "w_type": "Speed",
+        "purpose": "Race Preparation",
+        "distance_volume": "6.50 mi",
+        "notes": "6 x 300m with full recovery",
+        "spikes": true,
+        "gym": false,
+        "identifier": "abcdefab-cdef-4123-9876-fedcba987654"
+    },
+    {
+        "title": "Cross Training",
+        "date": "8/22/25",
+        "w_type": "Cross Training",
+        "purpose": "Recovery",
+        "distance_volume": "45 min",
+        "notes": "Stationary bike session",
+        "spikes": false,
+        "gym": true,
+        "identifier": "44556677-8899-aabb-ccdd-eeff00112233"
+    },
+    {
+        "title": "Race Day 5K",
+        "date": "8/23/25",
+        "w_type": "Competition",
+        "purpose": "Performance",
+        "distance_volume": "3.10 mi",
+        "notes": "Season opener",
+        "spikes": true,
+        "gym": false,
+        "identifier": "cafe1234-babe-5678-dead-beef98765432"
+    }
+]
