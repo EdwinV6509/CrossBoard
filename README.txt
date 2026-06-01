@@ -12,12 +12,12 @@ Current Features
 - Edit workout information
 - Delete workouts
 - Input validation for menu systems and yes/no prompts
+- JSON data persistence
+- Search by expanded workout parameters
 
 Planned Features
 
-- JSON data persistence
 - Calendar-based training plans
-- Search by title/date/type
 - Flask integration
 - Coach to athlete communication system
 - Training block automation
